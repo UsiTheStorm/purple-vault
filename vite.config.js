@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    base: isGitHub ? '/YOURREPO/' : '/',
+    base: isGitHub ? '/purple-vault/' : '/',
     build: {
       sourcemap: true,
       emptyOutDir: true,

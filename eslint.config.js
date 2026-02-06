@@ -1,29 +1,74 @@
-// .eslintrc.js
 import antfu from '@antfu/eslint-config';
+import perfectionist from 'eslint-plugin-perfectionist';
 
-export default antfu({
-  // Тип проекту: 'app' для звичайного веб/віте-проекту
-  type: 'app',
-  react: true,
+const perfectionistRules = perfectionist.configs['recommended-natural'].rules;
 
-  // TypeScript вимикаємо, бо у нас JS
-  typescript: false,
+export default antfu(
+  {
+    formatters: true,
+    react: true,
+    stylistic: {
+      indent: 2,
+      quotes: 'single',
+      semi: true,
+    },
+    type: 'app',
 
-  // Форматери включаємо, бо класно мати uniform code style
-  formatters: true,
-
-  stylistic: {
-    indent: 2, // відступи у 2 пробіли
-    semi: true, // ставимо крапку з комою після кожного виразу
-    quotes: 'single', // одинарні лапки
+    typescript: false,
   },
-}, {
-  rules: {
-    'no-console': ['warn'], // попередження при console.log()
-    'antfu/no-top-level-await': ['off'], // можна юзати top-level await
-    'node/prefer-global/process': ['off'], // не обов'язково використовувати глобальний process
-    'node/no-process-env': ['error'], // заборона використовувати process.env напряму
-    // 'perfectionist/sort-imports': ['error', { tsconfigRootDir: '.' }], // сортування імпортів
-    // "unicorn/filename-case": ["error", { case: "kebabCase", ignore: ["README.md"] }], // файли у kebab-case
+
+  {
+    rules: {
+      ...perfectionistRules,
+
+      'antfu/no-top-level-await': ['off'],
+
+      'import/order': 'off',
+      'no-console': ['warn'],
+
+      'node/no-process-env': ['error'],
+      'node/prefer-global/process': ['off'],
+
+      'perfectionist/sort-imports': [
+        'error',
+        {
+
+          customGroups: {
+            value: {
+              'css-modules': ['\\.(c|s[ac]|le)ss$'],
+            },
+          },
+          groups: [
+            'type',
+            'builtin',
+            'external',
+            'internal',
+            ['parent', 'sibling', 'index'],
+            'css-modules',
+            'unknown',
+          ],
+          order: 'asc',
+          type: 'natural',
+        },
+      ],
+      'perfectionist/sort-modules': 'off', // Вимкнули сортування функцій/компонентів у корені модуля
+
+      // 'perfectionist/sort-variable-declarations': [
+      //   'error',
+      //   {
+      //     order: 'asc',
+      //     partitionByNewLine: false,
+      //     type: 'natural',
+      //   },
+      // ], // Вимкнули сортування оголошень (const/let/var)
+      'react/jsx-one-expression-per-line': 'off',
+
+      'sort-imports': 'off',
+      'style/jsx-curly-brace-presence': [
+        'error',
+        { children: 'never', props: 'never' },
+      ],
+      'style/jsx-one-expression-per-line': 'off',
+    },
   },
-});
+);
