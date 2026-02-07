@@ -1,4 +1,4 @@
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv } from 'vite'
 
 export default defineConfig(({ mode }) => {
@@ -8,8 +8,16 @@ export default defineConfig(({ mode }) => {
   const isGitHub = deployTarget === 'GH'
 
   return {
-    plugins: [react()],
     base: isGitHub ? '/purple-vault/' : '/',
+
+    plugins: [
+      react({
+        babel: {
+          plugins: [['babel-plugin-react-compiler']],
+        },
+      }),
+    ],
+
     build: {
       sourcemap: true,
       emptyOutDir: true,
