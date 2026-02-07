@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 import reactLogo from './assets/react.svg'
-import CountryList from './components/CountryList'
-import Form from './components/Form'
+// import CountryList from './components/CountryList'
+// import Form from './components/Form'
 
 import viteLogo from '/vite.svg'
 
